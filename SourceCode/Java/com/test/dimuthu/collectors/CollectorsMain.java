@@ -3,9 +3,6 @@ package com.test.dimuthu.collectors;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import com.test.dimuthu.model.Employee;
 import com.test.dimuthu.model.Person;
@@ -13,23 +10,6 @@ import com.test.dimuthu.model.Person;
 public class CollectorsMain {
 
 	public static void main(String[] args) {
-		
-		/*List<String> givenList = Arrays.asList("a", "bb", "ccc", "dd");
-		
-		List<String> resultStreemList = givenList.stream().collect(toList());
-		
-		System.out.println("givenList: " + givenList);
-		System.out.println("resultStreemList: " + resultStreemList);
-		
-		Set<String> resultStreemSet = givenList.stream().collect(toSet());
-		System.out.println("resultStreemSet: " + resultStreemSet);
-		
-		List<String> resultCollection = givenList.stream().collect(toCollection(LinkedList::new));
-		System.out.println("resultCollection: " + resultCollection);
-		
-		Map<String, Integer> resultMap = givenList.stream().collect(toMap(Function.identity(), String::length));
-		System.out.println("resultMap: " + resultMap);*/
-		
 		
 		Employee noDependent = new Employee("No Dependent", 30, 300) ;
 		
