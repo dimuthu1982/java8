@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -28,30 +29,42 @@ public class CollectorsMain {
 
 		System.out.println("\n============= Initiating File Lookup Example =============");
 		fileLookupExample();
+		
+		System.out.println("\n============= Initiating Employee Sort =============");
+		collectionSortExample();
+	}
+
+	private static void collectionSortExample() {
+		List<Employee> employees = getEmployees();
+		
+		System.out.println("\n\t------------------ Sort Employees on Natural Order (By Age: Acending) ------------------");
+		employees.stream().sorted().forEach(System.out::println);
+		
+		System.out.println("\n\t------------------ Sort Employees on Comparator.naturalOrder() (By Age: Acending) ------------------");
+		employees.stream().sorted(Comparator.naturalOrder()).forEach(System.out::println);
+		
+		System.out.println("\n\t------------------ Sort Employees on Comparator.reverseOrder() (By Age: Decending) ------------------");
+		employees.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+		
+		System.out.println("\n\t------------------ Sort Employees on Comparator.comparing(Employee::getEmployeeNumber) (By employee Number: Acending) ------------------");
+		employees.stream().sorted(Comparator.comparing(Employee::getEmployeeNumber)).forEach(System.out::println);
+		
+		System.out.println("\n\t------------------ Sort Employees on Comparator.comparing(Employee::getEmployeeNumber) (By employee Number: Decending) ------------------");
+		employees.stream().sorted(Comparator.comparing(Employee::getEmployeeNumber).reversed()).forEach(System.out::println);
+		
+		System.out.println("\n\t------------------ Sort Employees on Comparator.comparing(Employee::getAddress, Comparator.nullsLast(Comparator.naturalOrder())) (By employee with out address last) ------------------");
+		employees.stream().sorted(Comparator.comparing(Employee::getAddress, Comparator.nullsLast(Comparator.naturalOrder()))).forEach(System.out::println);
+		
+		
+		System.out.println("\n\t------------------ Sort Employees on Comparator.comparing(Employee::getAddress, Comparator.nullsLast(Comparator.naturalOrder())) (By employee with out address first) ------------------");
+		employees.stream().sorted(Comparator.comparing(Employee::getAddress, Comparator.nullsFirst(Comparator.naturalOrder()))).forEach(System.out::println);
+		
+		
 	}
 
 	private static void employeeLookupExample() {
-		Employee noDependent = new Employee("No Dependent", 30, 300) ;
 
-		Employee emptyDependent = new Employee("Null Dependent", 34, 340) ;
-		emptyDependent.setDependences(new ArrayList<Person>());
-
-		Employee oneDependent = new Employee("One Dependent", 40, 400) ;
-		oneDependent.setDependences(Arrays.asList(new Person("One Dependent- Dependent 1", 10)));
-
-		Employee twoDependent = new Employee("Two Dependent", 50, 500) ;
-		twoDependent.setDependences(Arrays.asList(new Person("Two Dependent- Dependent 1", 14), new Person("Two Dependent- Dependent 2", 31)));
-
-		Employee threeDependent = new Employee("Three Dependent", 60, 600) ;
-		threeDependent.setDependences(Arrays.asList(new Person("Three Dependent- Dependent 1", 5), new Person("Three Dependent- Dependent 2", 20), new Person("Three Dependent- Dependent 3", 15)));
-
-
-		List<Employee> employees = new ArrayList<>();
-		employees.add(noDependent);
-		employees.add(emptyDependent);
-		employees.add(oneDependent);
-		employees.add(twoDependent);
-		employees.add(threeDependent);
+		List<Employee> employees = getEmployees();
 
 		System.out.println("\n\t------------------ Find employees age above 40 ------------------");
 		employees.stream().
@@ -192,6 +205,25 @@ public class CollectorsMain {
 			return true;
 		} catch (NumberFormatException e) {}
 		return false;
+	}
+	
+	private static List<Employee> getEmployees(){
+		Employee noDependent = new Employee("No Dependent", 30, 300, "Nobel Park") ;
+
+		Employee emptyDependent = new Employee("Null Dependent", 34, 340, null) ;
+		emptyDependent.setDependences(new ArrayList<Person>());
+
+		Employee oneDependent = new Employee("One Dependent", 40, 400, "Dandenong") ;
+		oneDependent.setDependences(Arrays.asList(new Person("One Dependent- Dependent 1", 10)));
+
+		Employee twoDependent = new Employee("Two Dependent", 50, 500, null) ;
+		twoDependent.setDependences(Arrays.asList(new Person("Two Dependent- Dependent 1", 14), new Person("Two Dependent- Dependent 2", 31)));
+
+		Employee threeDependent = new Employee("Three Dependent", 60, 600,"Lynndrust") ;
+		threeDependent.setDependences(Arrays.asList(new Person("Three Dependent- Dependent 1", 5), new Person("Three Dependent- Dependent 2", 20), new Person("Three Dependent- Dependent 3", 15)));
+
+
+		return Arrays.asList(noDependent,emptyDependent,oneDependent,twoDependent,threeDependent);
 	}
 
 }
